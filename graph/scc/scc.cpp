@@ -52,7 +52,7 @@ int main() {
     for(ll i=1; i<=n; i++){
         ans[scc_idx[i]].push_back(i);
         for (auto j: graph[i]){
-            if (scc_idx[i] != scc_idx[j]) indegree[scc_idx[j]] += indegree[scc_idx[i]]+1;
+            if (scc_idx[i] != scc_idx[j]) indegree[scc_idx[j]]++;
         }
     }
 }
