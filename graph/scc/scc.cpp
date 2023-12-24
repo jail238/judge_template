@@ -42,7 +42,6 @@ void scc(ll node){
 int main() {
     fastio;
     cin >> n >> m;
-    graph.reserve(scc_cnt);
     for(ll i=0; i<m; i++){
         cin >> a >> b;
         graph[a].emplace_back(b);
