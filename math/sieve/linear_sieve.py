@@ -10,6 +10,5 @@ def linear_sieve(n):
             sieve[i*j] = j
             if i%j == 0: break
 
-n = int(input()) # or input your size
-prime = [0, 0] + [1 for _ in range(n)]
-sieve = []
+n = int(input())
+prime, sieve = [0, 0] + [1 for _ in range(n)], []
