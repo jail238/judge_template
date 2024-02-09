@@ -35,6 +35,7 @@ void dfs(ll now, char cor){
 }
 
 int main() {
+    fastio;
     init();
     cin >> v >> e;
     for (ll i=0; i<e; i++){
