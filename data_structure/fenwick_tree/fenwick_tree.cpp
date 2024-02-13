@@ -32,6 +32,6 @@ void bit_update(ll idx, ll val){
 }
 
 int main(){
-  fastio;
-  cin >> n >> m;
+    fastio;
+    cin >> n >> m;
 }
