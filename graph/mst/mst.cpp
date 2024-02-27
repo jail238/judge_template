@@ -27,7 +27,7 @@ void uni(ll a, ll b){
 }
 
 int main() {
-    
+    fastio;
     cin >> v >> e;
     init();
     while (e--){
