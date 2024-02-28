@@ -5,15 +5,7 @@ typedef long long ll;
 using namespace std;
 
 ll n, m, a, b, x, y, cnt;
-char p;
-ll in_ett[MAX], out_ett[MAX], arr[MAX], tree[MAX];
-vector<vector<ll>> graph(MAX); 
-
-void ett(ll now){
-    in_ett[now] = ++cnt;
-    for (auto nxt: graph[now]) ett(nxt);
-    out_ett[now] = cnt;
-}
+ll arr[MAX], tree[MAX];
 
 ll bit_sum(ll idx){
     ll val = 0;
