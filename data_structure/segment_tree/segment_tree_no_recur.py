@@ -30,5 +30,5 @@ def update(tree, idx, n):
         idx = idx>>1
 
 n = int(input())
-tree = [0 for _ in range(n*4)]
-arr = []
+tree = [0 for _ in range(n*2+100)]
+arr = list(map(int, input().split()))
