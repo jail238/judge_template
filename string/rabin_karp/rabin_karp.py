@@ -57,8 +57,6 @@ while m1 == -1 or m2 == -1:
         if m1 == -1: m1 = n
         else: m2 = n
 
-n = int(input())
-lo, hi = 0, n
 s = input().rstrip()
 s2 = input().rstrip()
 text = hash2(s, len(s2), 0)
