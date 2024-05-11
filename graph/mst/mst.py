@@ -23,6 +23,7 @@ for edge in edges:
     if find(p, a) != find(p, b):
         union(p, a, b)
         ans += cost
+        lines += 1
     if lines == n-1:
         break
 print(ans)
