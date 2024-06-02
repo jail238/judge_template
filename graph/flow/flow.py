@@ -14,7 +14,7 @@ for _ in range(p):
     graph[b].append(a)
     cap[a][b] = c
 
-total_flow, s, t = 0, 1, 2
+total_flow, src, sink = 0, 1, 2
 
 while True:
     prev = [-1 for _ in range(n+1)]
@@ -28,15 +28,15 @@ while True:
                     q.append(nxt)
                     prev[nxt] = now
                     if nxt == t: break
-    if prev[t] == -1: break
+    if prev[sink] == -1: break
     
-    f, i = INF, t
-    while i != s:
+    f, i = INF, sink
+    while i != src:
         f = min(f, cap[prev[i]][i]-flow[prev[i]][i])
         i = prev[i]
     
-    i = t
-    while i != s:
+    i = sink
+    while i != src:
         flow[prev[i]][i] += f
         flow[i][prev[i]] -= f
         i = prev[i]
