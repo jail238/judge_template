@@ -12,7 +12,7 @@ for _ in range(p):
     a, b, c = map(int, input().split())
     graph[a].append(b)
     graph[b].append(a)
-    cap[a][b] = c # 단방향의 경우
+    cap[a][b] = c
 
 total_flow, s, t = 0, 1, 2
 
