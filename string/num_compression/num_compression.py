@@ -1,4 +1,4 @@
-def incode(x):
+def encode(x):
     if x == 0: return ["!"]
     w = []
     while x > 0:
