@@ -34,8 +34,8 @@ def NTT(arr, inv):
 def mult(a, b):
     n = 1
     while n < len(a)+len(b): n <<= 1
-    for _ in range(n-len(a)): a.append(0)
-    for _ in range(n-len(b)): b.append(0)
+    a = a+[0]*(n-len(a))
+    b = b+[0]*(n-len(b))
     arr1 = NTT(a, False)
     arr2 = NTT(b, False)
     conv = [(arr1[i]*arr2[i])%MOD for i in range(n)]
