@@ -14,5 +14,16 @@ def prime_fac(n):
         else: div[k] += 1
     return div
 
+def divisors(divs):
+    factors = [1]
+    for pr, exp in divs.items():
+        new_divs = []
+        for d in factors:
+            for i in range(1, exp+1):
+                new_divs.append(d*(pr**i))
+        factors.extend(new_divs)
+    return factors
+
 n = int(input())
-prime_fac(n)
+divs = prime_fac(n)
+factors = divisors(divs)
