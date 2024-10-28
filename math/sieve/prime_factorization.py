@@ -2,13 +2,17 @@ import sys
 input = sys.stdin.readline
 
 def prime_fac(n):
-    div, i, k = {}, 2, n
+    div, i, k = {}, 3, n
+    while k%2 == 0:
+        if not 2 in div: div[2] = 1
+        else: div[2] += 1
+        k //= 2
     while i*i <= k:
         while k%i == 0:
             if not i in div: div[i] = 1
             else: div[i] += 1
             k //= i
-        i += 1
+        i += 2
     if k != 1:
         if not k in div: div[k] = 1
         else: div[k] += 1
