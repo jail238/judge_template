@@ -2,10 +2,6 @@ from math import log2, ceil
 import sys
 input = sys.stdin.readline
 
-from math import log2, ceil
-import sys
-input = sys.stdin.readline
-
 def init(n, h):
     for i in range(n):
         tree[2**h+i] = l[i]
