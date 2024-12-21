@@ -2,7 +2,7 @@ from math import isqrt
 import sys
 input = sys.stdin.readline
 
-def prime(n): # O(N^(1/2)/2)
+def prime(n):
     if n % 2 == 0:
         if n == 2: return True
         else: return False
