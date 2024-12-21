@@ -1,4 +1,3 @@
-# O(NloglogN / 2)
 from math import isqrt
 import sys
 input = sys.stdin.readline
