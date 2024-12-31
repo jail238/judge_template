@@ -13,9 +13,7 @@ def prime_fac(n):
             else: div[i] += 1
             k //= i
         i += 2
-    if k != 1:
-        if not k in div: div[k] = 1
-        else: div[k] += 1
+    if k != 1: div[k] = 1
     return div
 
 def divisors(divs):
