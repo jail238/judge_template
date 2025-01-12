@@ -47,10 +47,7 @@ class Dinic:
 
         while self.bfs(S, T, lvl):
             work = [0 for _ in range(self.n)]
-            while True:
-                flow = self.dfs(S, T, lvl, INF, work)
-                if flow == 0: break
-                total_flow += flow
+            while flow := self.dfs(S, T, lvl, INF, work): total_flow += flow
         return total_flow
 
 # def in_node(v): return 2*v -> 정점 분할
