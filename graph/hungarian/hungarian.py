@@ -3,12 +3,16 @@ input = sys.stdin.readline
 INF = int(1e6)
 
 class Hungarian:
-    def __init__(self, n):
+    def __init__(self, n, min_v=True):
         self.n = n
         self.matrix = [[0 for _ in range(n)] for _ in range(n)]
+        self.min_v = min_v
     
-    def add_matrix(self, mat): self.matrix = mat
-
+    def add_matrix(self, mat):
+        for i in range(n):
+            for j in range(n):
+                    self.matrix[i][j] = mat[i][j] * (1 if self.min_v else -1)
+    
     def hungarian(self):
         u, v, matching = [0 for _ in range(self.n+1)], [0 for _ in range(self.n+1)], [0 for _ in range(self.n+1)]
         agu_path = [0 for _ in range(self.n+1)]
@@ -44,7 +48,7 @@ class Hungarian:
                 matching[now] = matching[nxt]
                 now = nxt
                 if now == 0: break
-        return -v[0]
+        return v[0]*(-1 if self.min_v else 1)
 
 n = int(input())
 matrix = [list(map(int, input().split())) for _ in range(n)]
