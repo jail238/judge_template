@@ -3,9 +3,11 @@ input = sys.stdin.readline
 INF = int(1e6)
 
 class Hungarian:
-    def __init__(self, n, matrix):
+    def __init__(self, n):
         self.n = n
-        self.matrix = matrix
+        self.matrix = [[0 for _ in range(n)] for _ in range(n)]
+    
+    def add_matrix(self, mat): self.matrix = mat
 
     def hungarian(self):
         u, v, matching = [0 for _ in range(self.n+1)], [0 for _ in range(self.n+1)], [0 for _ in range(self.n+1)]
@@ -46,5 +48,6 @@ class Hungarian:
 
 n = int(input())
 matrix = [list(map(int, input().split())) for _ in range(n)]
-hungarian = Hungarian(n, matrix)
+hungarian = Hungarian(n)
+hungarian.add_matrix(matrix)
 print(hungarian.hungarian())
