@@ -7,10 +7,7 @@ class Hungarian:
         self.n = n
         self.matrix = [[0 for _ in range(n)] for _ in range(n)]
     
-    def add_matrix(self, mat):
-        for i in range(self.n):
-            for j in range(self.n):
-                self.matrix[i][j] = mat[i][j]
+    def add_matrix(self, mat): self.matrix = mat
 
     def hungarian(self):
         u, v, matching = [0 for _ in range(self.n+1)], [0 for _ in range(self.n+1)], [0 for _ in range(self.n+1)]
