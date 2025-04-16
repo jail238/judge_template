@@ -9,8 +9,8 @@ class Hungarian:
         self.min_v = min_v
     
     def add_matrix(self, mat):
-        for i in range(n):
-            for j in range(n):
+        for i in range(self.n):
+            for j in range(self.n):
                     self.matrix[i][j] = mat[i][j] * (1 if self.min_v else -1)
     
     def hungarian(self):
