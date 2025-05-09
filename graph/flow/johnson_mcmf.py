@@ -53,10 +53,11 @@ class MCMF:
                         heappush(heap, (nxt, v))
         return dist, parent
 
-    def mcmf(self, source, sink):
+def mcmf(self, source, sink, maxf=int(1e9)):
         self.spfa(source)
         INF, flow, cost = int(1e9), 0, 0
         while True:
+            if flow >= maxf: break
             dist, parent = self.dijkstra_potential(source)
             if dist[sink] == INF: break
             for i in range(self.n):
