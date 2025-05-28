@@ -4,5 +4,4 @@ def egcd(a, b):
         q, r = b//a, b%a
         m, n = x-s*q, y-t*q
         a, b, x, y, s, t = r, a, s, t, m, n
-    gcd, x, y = b, y, x
-    return gcd, x, y
+    return b, x, y #gcd, x0, y0
