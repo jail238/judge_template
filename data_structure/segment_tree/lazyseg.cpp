@@ -67,7 +67,7 @@ private:
 
     void set_operation(int merge_type, int update_type){
         bool is_using_mod = (this->MOD > 0);
-        /* 1: 합(default), 2: 곱, 3: min, 4: max, 5: xor */
+        /* 1: 합(default), 2: 곱, 3: min, 4: max, 5: xor, 6: or */
         switch (merge_type){
             case 1:
                 node_idt = 0;
@@ -101,10 +101,15 @@ private:
                 node_idt = 0;
                 merge = [](const Node& a, const Node& b) { return a^b; };
                 break;
+            
+            case 6:
+                node_idt = 0;
+                merge = [](const Node& a, const Node& b) { return a|b; };
+                break;
         }
 
         switch (update_type){
-            /* 1: 구간 변화(default), 2: 구간 변경(xor 포함), 3: xor 구간 변화 */
+            /* 1: 구간 변화(default), 2: 구간 변경(xor 포함), 3: xor 구간 변화, 4: 0, 1 스위칭 */
             case 1:
                 lazy_idt = 0;
                 apply_lazy = [=](Node& node, const Lazy& lazy_val, int len){
