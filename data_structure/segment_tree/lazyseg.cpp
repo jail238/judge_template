@@ -99,7 +99,7 @@ private:
         }
 
         switch (update_type){
-            /* 1: 구간 변화(default), 2: 구간 변경 */
+            /* 1: 구간 변화(default), 2: 구간 변경(xor 포함), 3: xor 구간 변화 */
             case 1:
                 lazy_idt = 0;
                 apply_lazy = [=](Node& node, const Lazy& lazy_val, int len){
@@ -114,11 +114,22 @@ private:
                 apply_lazy = [=](Node& node, const Lazy& lazy_val, int len){
                     if (lazy_val != lazy_idt){
                         if (merge_type == 3 || merge_type == 4) node = lazy_val;
+                        else if (merge_type == 5) node = (len&1) ? lazy_val : 0;
                         else node = lazy_val*len;
                     }
                 };
                 merge_lazy = [=](Lazy& old_lazy, const Lazy& new_lazy){
                     if (new_lazy != lazy_idt) old_lazy = new_lazy;
+                };
+                break;
+            
+            case 3:
+                lazy_idt = 0;
+                apply_lazy = [](Node& node, const Lazy& lazy_val, int len){
+                    if (len&1) node ^= lazy_val;
+                };
+                merge_lazy = [](Lazy& old_lazy, const Lazy& new_lazy) {
+                    old_lazy ^= new_lazy;
                 };
                 break;
             
