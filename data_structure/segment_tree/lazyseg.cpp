@@ -125,7 +125,7 @@ private:
                             node = (node+tmp)%this->MOD;
                         }
                         else node += lazy_val*len;
-                        }
+                    }
                 };
                 merge_lazy = [=, this](Lazy& old_lazy, const Lazy& new_lazy) {
                     old_lazy += new_lazy;
@@ -174,7 +174,7 @@ private:
                             node = (node+tmp)%this->MOD;
                         }
                         else node += lazy_val*len;
-                        }
+                    }
                 };
                 merge_lazy = [=, this](Lazy& old_lazy, const Lazy& new_lazy) {
                     old_lazy += new_lazy;
