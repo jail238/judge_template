@@ -11,6 +11,7 @@ private:
     vector<Lazy> lazy;
     Node node_idt;
     Lazy lazy_idt;
+    ll MOD;
 
     function<Node(const Node&, const Node&)> merge;
     function<void(Node&, const Lazy&, int)> apply_lazy;
@@ -65,16 +66,25 @@ private:
     }
 
     void set_operation(int merge_type, int update_type){
+        bool is_use_mod = (this->MOD > 0);
         /* 1: 합(default), 2: 곱, 3: min, 4: max, 5: xor */
         switch (merge_type){
             case 1:
                 node_idt = 0;
-                merge = [](const Node& a, const Node& b) { return a+b; };
+                merge = [this, is_use_mod](const Node& a, const Node& b) {
+                    Node res = a+b;
+                    if (is_use_mod) res = (res%this->MOD+this->MOD)%this->MOD;
+                    return res;
+                };
                 break;
             
             case 2:
                 node_idt = 1;
-                merge = [](const Node& a, const Node& b) { return a*b; };
+                merge = [this, is_use_mod](const Node& a, const Node& b) {
+                    Node res = a*b;
+                    if (is_use_mod) res = (res%this->MOD+this->MOD)%this->MOD;
+                    return res;
+                };
                 break;
 
             case 3:
@@ -94,7 +104,11 @@ private:
             
             default:
                 node_idt = 0;
-                merge = [](const Node& a, const Node& b) { return a+b; };
+                merge = [this, is_use_mod](const Node& a, const Node& b) {
+                    Node res = a+b;
+                    if (is_use_mod) res = (res%this->MOD+this->MOD)%this->MOD;
+                    return res;
+                };
                 break;
         }
 
@@ -102,20 +116,36 @@ private:
             /* 1: 구간 변화(default), 2: 구간 변경(xor 포함), 3: xor 구간 변화 */
             case 1:
                 lazy_idt = 0;
-                apply_lazy = [=](Node& node, const Lazy& lazy_val, int len){
+                apply_lazy = [=, this](Node& node, const Lazy& lazy_val, int len){
                     if (merge_type == 3 || merge_type == 4) node += lazy_val;
-                    else node += lazy_val*len;
+                    else {
+                        if (is_use_mod){
+                            Node tmp = (lazy_val%this->MOD+this->MOD)%this->MOD;
+                            tmp = (tmp*len)%this->MOD;
+                            node = (node+tmp)%this->MOD;
+                        }
+                        else node += lazy_val*len;
+                        }
                 };
-                merge_lazy = [](Lazy& old_lazy, const Lazy& new_lazy) { old_lazy += new_lazy; };
+                merge_lazy = [=, this](Lazy& old_lazy, const Lazy& new_lazy) {
+                    old_lazy += new_lazy;
+                    if (is_use_mod) old_lazy = (old_lazy%this->MOD+this->MOD)%this->MOD;
+                };
                 break;
 
             case 2:
                 lazy_idt = 0;
-                apply_lazy = [=](Node& node, const Lazy& lazy_val, int len){
+                apply_lazy = [=, this](Node& node, const Lazy& lazy_val, int len){
                     if (lazy_val != lazy_idt){
                         if (merge_type == 3 || merge_type == 4) node = lazy_val;
                         else if (merge_type == 5) node = (len&1) ? lazy_val : 0;
-                        else node = lazy_val*len;
+                        else {
+                            if (is_use_mod){
+                                Node tmp = (lazy_val%this->MOD + this->MOD)%this->MOD;
+                                node = (tmp*len)%this->MOD;
+                            }
+                            else node = lazy_val*len;
+                        }
                     }
                 };
                 merge_lazy = [=](Lazy& old_lazy, const Lazy& new_lazy){
@@ -135,23 +165,40 @@ private:
             
             default:
                 lazy_idt = 0;
-                apply_lazy = [=](Node& node, const Lazy& lazy_val, int len){
+                apply_lazy = [=, this](Node& node, const Lazy& lazy_val, int len){
                     if (merge_type == 3 || merge_type == 4) node += lazy_val;
-                    else node += lazy_val*len;
+                    else {
+                        if (is_use_mod){
+                            Node tmp = (lazy_val%this->MOD+this->MOD)%this->MOD;
+                            tmp = (tmp*len)%this->MOD;
+                            node = (node+tmp)%this->MOD;
+                        }
+                        else node += lazy_val*len;
+                        }
                 };
-                merge_lazy = [](Lazy& old_lazy, const Lazy& new_lazy) { old_lazy += new_lazy; };
+                merge_lazy = [=, this](Lazy& old_lazy, const Lazy& new_lazy) {
+                    old_lazy += new_lazy;
+                    if (is_use_mod) old_lazy = (old_lazy%this->MOD+this->MOD)%this->MOD;
+                };
                 break;
         }
     }
 
 public:
-    LazySegTree(int size, int merge_type, int update_type): n(size){
+    LazySegTree(int size, int merge_type, int update_type, ll mod = 0): n(size), MOD(mod) {
         tree.resize(4*n);
         lazy.resize(4*n);
         set_operation(merge_type, update_type);
     }
 
-    LazySegTree(const vector<Node>& v, int merge_type, int update_type): LazySegTree(v.size(), merge_type, update_type) { seg_build(v, 1, 0, n-1); }
+    LazySegTree(const vector<Node>& v, int merge_type, int update_type, ll mod = 0): LazySegTree(v.size(), merge_type, update_type, mod) {
+        if (MOD > 0){
+            vector<Node> tmp_v = v;
+            for (int i=0; i<n; i++) tmp_v[i] = (tmp_v[i]%MOD+MOD)%MOD;
+            seg_build(tmp_v, 1, 0, n-1);
+        }
+        else seg_build(v, 1, 0, n-1);
+    }
     void update(int l, int r, const Lazy& lazy_val) { seg_update(l, r, lazy_val, 1, 0, n-1); }
     Node query(int l, int r) { return seg_query(l, r, 1, 0, n-1); }
 };
