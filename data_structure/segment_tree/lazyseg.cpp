@@ -183,9 +183,9 @@ private:
 
 public:
     LazySegTree(int size, int merge_type, int update_type, ll mod = 0): n(size), MOD(mod) {
+        set_operation(merge_type, update_type);
         tree.resize(4*n);
         lazy.resize(4*n);
-        set_operation(merge_type, update_type);
     }
 
     LazySegTree(const vector<Node>& v, int merge_type, int update_type, ll mod = 0): LazySegTree(v.size(), merge_type, update_type, mod) {
