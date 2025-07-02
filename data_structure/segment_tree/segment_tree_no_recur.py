@@ -7,9 +7,9 @@ def init(n):
     for i in range(n-1, 0, -1):
         tree[i] = tree[i<<1] + tree[i<<1|1]
 
-def query(tree, l, r, n):
+def query(tree, l, r, n): # range [l, r]
     l += n
-    r += n
+    r += n+1
     t = 0
     while l < r:
         if l&1:
@@ -22,9 +22,9 @@ def query(tree, l, r, n):
         r >>= 1
     return t
 
-def update(tree, idx, n):
+def update(tree, idx, n, val):
     idx += n
-    tree[idx] = 1
+    tree[idx] = val
     while idx > 1:
         tree[idx>>1] = tree[idx]+tree[idx^1]
         idx = idx>>1
