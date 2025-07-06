@@ -1,8 +1,9 @@
 #include <bits/stdc++.h>
 #define fastio cin.tie(0), cout.tie(0), ios_base::sync_with_stdio(false)
 typedef long long ll;
+// #define int ll
 const int INF = 2e9;
-const int MAX_SIZE = 40005;
+const int MAX_SIZE = 111;
 using namespace std;
 
 class MCMF{
@@ -61,9 +62,9 @@ public:
         return 0;
     }
 
-    pair<int, int> solve(int src, int sink){
+    pair<int, int> solve(int src, int sink, int maxf=INF){
         int maxflow = 0, mincost = 0;
-        while(spfa(src, sink)){
+        while((maxflow < maxf) && spfa(src, sink)){
             used.fill(0);
             int nowflow = 0;
             visited.fill(false);
@@ -76,3 +77,8 @@ public:
         return {maxflow, mincost};
     }
 };
+
+signed main(){
+    fastio;
+    MCMF mcmf(MAX_SIZE);
+}
