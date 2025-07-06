@@ -38,7 +38,7 @@ class MCMF:
 
     def solve(self, s, t, maxf=INF):
         max_flow, min_cost = 0, 0
-        while max_flow < maxflow and self.spfa(s, t):
+        while max_flow < maxf and self.spfa(s, t):
             flow = self.inf
             now = t
             while now != s:
@@ -46,6 +46,7 @@ class MCMF:
                 edge_idx = self.edge[now]
                 flow = min(flow, self.adj[prev][edge_idx][1])
                 now = prev
+            flow = min(flow, maxf-max_flow)
             max_flow += flow
             min_cost += flow*self.dist[t]
             now = t
