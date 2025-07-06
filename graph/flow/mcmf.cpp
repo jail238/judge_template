@@ -67,11 +67,12 @@ public:
         while((maxflow < maxf) && spfa(src, sink)){
             used.fill(0);
             int nowflow = 0;
-            visited.fill(false);
-            while ((nowflow = dfs(src, sink, src, INF))){
+            while (maxflow < maxf){
+                visited.fill(false);
+                int nowflow = dfs(src, sink, src, maxf-maxflow);
+                if (nowflow == 0) break;
                 maxflow += nowflow;
                 mincost += dist[sink]*nowflow;
-                visited.fill(false);
             }
         }
         return {maxflow, mincost};
