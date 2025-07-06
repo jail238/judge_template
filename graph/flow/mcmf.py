@@ -36,9 +36,9 @@ class MCMF:
                         self.visited[v] = 1
         return self.dist[t] != self.inf
 
-    def solve(self, s, t):
+    def solve(self, s, t, maxf=INF):
         max_flow, min_cost = 0, 0
-        while self.spfa(s, t):
+        while max_flow < maxflow and self.spfa(s, t):
             flow = self.inf
             now = t
             while now != s:
@@ -57,3 +57,5 @@ class MCMF:
                 self.adj[now][rev_edge_idx][1] += flow
                 now = prev
         return max_flow, min_cost
+
+mcmf = MCMF(111)
