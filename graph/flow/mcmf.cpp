@@ -66,7 +66,6 @@ public:
         int maxflow = 0, mincost = 0;
         while((maxflow < maxf) && spfa(src, sink)){
             used.fill(0);
-            int nowflow = 0;
             while (maxflow < maxf){
                 visited.fill(false);
                 int nowflow = dfs(src, sink, src, maxf-maxflow);
