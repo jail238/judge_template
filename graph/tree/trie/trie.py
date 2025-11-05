@@ -55,3 +55,16 @@ class Trie:
             if not c in node.children: return -1
             node = node.children[c]
         return node
+    
+    def max_xor(self, bit):
+        node = self
+        mxor = 0
+        for i in range(30):
+            if bit[i] == '0': opbit = '1'
+            else: opbit = '0'
+            cbit = 1<<(29-i)
+            if opbit in node.children:
+                mxor |= cbit
+                node = node.children[opbit]
+            else: node = node.children[bit[i]]
+        return mxor
