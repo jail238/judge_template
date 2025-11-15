@@ -43,6 +43,11 @@ def pollard_rho(n):
 
 def prime_factorization(n):
     ans = {}
+    while n%2==0:
+        if not 2 in ans: ans[2] = 1
+        else: ans[2] += 1
+        n >>= 1
+    
     while n > 1:
         div = pollard_rho(n)
         if not div in ans: ans[div] = 1
