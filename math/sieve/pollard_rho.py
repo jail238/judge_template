@@ -5,7 +5,7 @@ input = sys.stdin.readline
 prime = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41]
 
 def miller_rabin(n, p):
-    if n%p == 0: return True
+    if n%p == 0: return n==p
     d = n-1
     while d%2==0: d >>= 1
 
@@ -18,8 +18,10 @@ def miller_rabin(n, p):
     return False
 
 def prime_chk(n):
-    for i in range(13): # 2^64
+    if n < 2: return False
+    for i in range(13):
         if n == prime[i]: return True
+        if n%prime[i] == 0: return False
         if not miller_rabin(n, prime[i]): return False
     return True
 
@@ -41,11 +43,6 @@ def pollard_rho(n):
 
 def prime_factorization(n):
     ans = {}
-    while n % 2 == 0:
-        if not 2 in ans: ans[2] = 1
-        else: ans[2] += 1
-        n //= 2
-
     while n > 1:
         div = pollard_rho(n)
         if not div in ans: ans[div] = 1
