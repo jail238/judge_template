@@ -3,7 +3,7 @@ import sys
 input = sys.stdin.readline
 
 class Dinic:
-    def __init__(self, n): # size of graph
+    def __init__(self, n):
         self.n = n
         self.adj = [[] for _ in range(n)]
     
