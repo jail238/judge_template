@@ -1,27 +1,36 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
 
 def scc(node):
     global ids, scc_cnt
-    ids_arr[node], parents[node] = ids, ids
-    ids += 1; visited[node] = True
-    stack.append(node)
-    
-    for now in graph[node]:
-        if ids_arr[now] == 0:
-            scc(now)
-            parents[node] = min(parents[now], parents[node])
-        elif visited[now]:
-            parents[node] = min(parents[now], parents[node])
-    
-    w = -1
-    if parents[node] == ids_arr[node]:
-        while w != node:
-            w = stack.pop()
-            scc_idx[w] = scc_cnt
-            visited[w] = False
-        scc_cnt += 1
+    sstack = [(node, 0, -1)]
+    while sstack:
+        node, idx, ret = sstack.pop()
+        if ids_arr[node] == 0 and ret == -1 and idx == 0:
+            ids_arr[node], parents[node] = ids, ids
+            ids += 1
+            visited[node] = True
+            stack.append(node)
+        if ret != -1:
+            child = graph[node][ret]
+            parents[node] = min(parents[child], parents[node])
+            idx = ret+1 
+        while idx < len(graph[node]):
+            now = graph[node][idx]
+            if ids_arr[now] == 0:
+                sstack.append((node, idx, idx))
+                sstack.append((now, 0, -1))
+                break
+            elif visited[now]: parents[node] = min(parents[now], parents[node])
+            idx += 1
+        else:
+            w = -1
+            if parents[node] == ids_arr[node]:
+                while w != node:
+                    w = stack.pop()
+                    scc_idx[w] = scc_cnt
+                    visited[w] = False
+                scc_cnt += 1
 
 v, e = map(int, input().split())
 graph = [[] for _ in range((v+1))]
