@@ -1,6 +1,5 @@
 import sys
 input = sys.stdin.readline
-sys.setrecursionlimit(10**6)
 
 def switch(x):
     if x > 0: return 2*x-1
