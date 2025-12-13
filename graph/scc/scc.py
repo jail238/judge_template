@@ -21,7 +21,7 @@ def scc(node):
                 sstack.append((node, idx, idx))
                 sstack.append((now, 0, -1))
                 break
-            elif visited[now]: parents[node] = min(parents[now], parents[node])
+            elif visited[now]: parents[node] = min(parents[node], ids_arr[now])
             idx += 1
         else:
             w = -1
