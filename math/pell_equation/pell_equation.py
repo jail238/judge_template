@@ -14,7 +14,7 @@ def continued_fraction(D):
 
 def pell_equation(D):
     sqrtD = isqrt(D)
-    if sqrtD**2 == D: return sqrtD, 1
+    if sqrtD**2 == D: return 1, 0
     cf = continued_fraction(D)
     a0, l = cf[0], len(cf)-1
     if l&1: period = 2*l-1 # 주기 홀수면 -1 다음에 1
