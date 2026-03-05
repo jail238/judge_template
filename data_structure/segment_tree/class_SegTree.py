@@ -3,8 +3,18 @@ input = sys.stdin.readline
 
 class SegTree:
     __slots__ = ("n", "op", "e", "t")
+    INF = int(1e18)
 
-    def __init__(self, arr, mode, inf=10**18):
+    def merge(self, l, r):
+        suml, prefl, suffl, bestl = l
+        sumr, prefr, suffr, bestr = r
+        sum_lr = suml+sumr
+        pref_lr = max(prefl, suml+prefr)
+        suff_lr = max(suffr, sumr+suffl)
+        best_lr = max(bestl, bestr, suffl+prefr)
+        return (sum_lr, pref_lr, suff_lr, best_lr)
+
+    def __init__(self, arr, mode, inf=INF):
         self.n = len(arr)
         if mode == "+":
             self.op = operator.add
@@ -21,6 +31,10 @@ class SegTree:
         elif mode == "max":
             self.op = max
             self.e = -inf
+        elif mode == "maxsub":
+            self.op = self.merge
+            self.e = (0, -inf, -inf, -inf)
+
         n, e, op = self.n, self.e, self.op
         t = [e]*(2*n)
         t[n:n+n] = arr
@@ -38,7 +52,7 @@ class SegTree:
         
     def query(self, l, r):
         n, t, op, sml, smr = self.n, self.t, self.op, self.e, self.e
-        r += 1; l += n; r += n
+        l += n; r += n+1
         while l < r:
             if l&1:
                 sml = op(sml, t[l])
